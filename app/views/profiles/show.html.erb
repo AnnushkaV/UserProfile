@@ -1,0 +1,13 @@
+<h3><%= @user.username %>'s Profile</h3>
+<div class="profile_pic">
+  <%= @profile.avatar %>
+</div>
+<div class="profile_list">
+  <ul>
+    <li>Name: <%= @profile.name %></li>
+    <li>Email: <%= @profile.email %></li>
+  </ul>
+</div>
+<% if current_user == @user %>
+   <%= link_to "Edit Profile", [:edit, @user, :profiles] %>
+<% end %>
