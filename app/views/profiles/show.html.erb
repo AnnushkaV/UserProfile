@@ -1,13 +1,17 @@
-<h3><%= @user.username %>'s Profile</h3>
-<div class="profile_pic">
-  <%= @profile.avatar %>
+<h3 style="margin-top: 100px"><%= @profile.name %>'s Profile</h3>
+<div class="user_info">
+  <div class="profile_avatar">
+    <%= image_tag @profile.avatar.url %>
+  </div>
 </div>
+
+<% if current_user == @user %>
+
+<% end %>
 <div class="profile_list">
   <ul>
     <li>Name: <%= @profile.name %></li>
-    <li>Email: <%= @profile.email %></li>
+    <li>Email: <%= @user.email %></li>
+    <li>Password: <%= @user.password %></li>
   </ul>
 </div>
-<% if current_user == @user %>
-   <%= link_to "Edit Profile", [:edit, @user, :profiles] %>
-<% end %>

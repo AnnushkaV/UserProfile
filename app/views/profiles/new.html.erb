@@ -1,12 +1,11 @@
 <h2>Create Profile</h2>
 <div class="new_profile_form">
-  <%= form_for [@user, @profile], :url => new_user_profile_path(@user) do |f| %>
+  <%= form_for [@user, @profile], :url => user_profiles_path(@user) do |f| %>
       <div class="field">
         <%= f.label :name %><br />
         <%= f.text_field :name %>
       </div>
       <div class="field">
-        <%= f.label :avatar %><br />
         <%= f.file_field :avatar %>
       </div>
       <%= f.fields_for :users do |user_form| %>
@@ -19,7 +18,7 @@
       <% end %>
 
       <div class="actions">
-        <%= f.submit "Create account" %>
+        <%= f.submit "Create account"%>
       </div>
   <% end %>
 </div>

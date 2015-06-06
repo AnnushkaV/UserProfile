@@ -1,7 +1,6 @@
 <h2>Edit Profile</h2>
 <div class="edit_profile_form">
-  <%= form_for @profile, url: user_profile_path do |form| %>
-      <%= form_for [@user, @profile], :url => new_user_profile_path(@user) do |f| %>
+  <%= form_for [@user, @profile], :url => user_profile_path(@user) do |f| %>
           <div class="field">
             <%= f.label :name %><br />
             <%= f.text_field :name %>
@@ -20,8 +19,7 @@
           <% end %>
 
           <div class="actions">
-            <%= f.submit "Create account" %>
+            <%= f.submit "Update account"%>
           </div>
-      <% end %>
   <% end %>
 </div>
