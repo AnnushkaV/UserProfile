@@ -1,6 +1,7 @@
-<h3 style="margin-top: 100px"><%= @profile.name %>'s Profile</h3>
+<h3 style="margin-top: 100px"><%= @user.name %>'s Profile</h3>
 <div class="user_info">
   <div class="profile_avatar">
+
     <%= image_tag @profile.avatar.url %>
   </div>
 </div>
@@ -10,8 +11,7 @@
 <% end %>
 <div class="profile_list">
   <ul>
-    <li>Name: <%= @profile.name %></li>
+    <li>Name: <%= @user.name %></li>
     <li>Email: <%= @user.email %></li>
-    <li>Password: <%= @user.password %></li>
   </ul>
 </div>

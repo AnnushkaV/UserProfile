@@ -1,23 +1,21 @@
 <h2>Edit Profile</h2>
 <div class="edit_profile_form">
   <%= form_for [@user, @profile], :url => user_profile_path(@user) do |f| %>
-          <div class="field">
-            <%= f.label :name %><br />
-            <%= f.text_field :name %>
-          </div>
-          <div class="field">
-            <%= f.label :avatar %><br />
-            <%= f.file_field :avatar %>
-          </div>
+
           <%= f.fields_for :user do |user_form| %>
               <div class="field"><%= user_form.label :email %><br />
-                <%= user_form.email_field :email %></div>
+                <%= user_form.text_field :email %></div>
+              <div class="field"><%= user_form.label :name %><br />
+                <%= user_form.name_field :name %></div>
               <div class="field"><%= user_form.label :password %><br />
                 <%= user_form.password_field :password %></div>
               <div class="field"><%= user_form.label :password_confirmation %><br />
                 <%= user_form.password_field :password_confirmation %></div>
           <% end %>
-
+          <div class="field">
+            <%= f.label :avatar %><br />
+            <%= f.file_field :avatar %>
+          </div>
           <div class="actions">
             <%= f.submit "Update account"%>
           </div>

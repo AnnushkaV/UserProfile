@@ -14,7 +14,7 @@
 
     <% @users.each do |user| %>
         <tr>
-
+          <td>Name:<%= @users.name%></td>
           <td><%=link_to 'Sent Message', "#", class: "btn btn-primary btn-xs start-conversation",
                   "data-sid" => current_user.id, "data-rip" => user.id%></td>
         </tr>

@@ -1,13 +1,11 @@
 class CreateMessages < ActiveRecord::Migration
   def change
     create_table :messages do |t|
-      t.string :belongs_to
-      t.sender, :
-      t.string :belongs_to
-      t.reciver :
       t.text :body
+      t.references :sender, index: true, foreign_key: true
+      t.references :reciver, index: true, foreign_key: true
 
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end

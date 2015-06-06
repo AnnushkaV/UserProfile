@@ -1,14 +1,11 @@
 <h2>Create Profile</h2>
 <div class="new_profile_form">
   <%= form_for [@user, @profile], :url => user_profiles_path(@user) do |f| %>
-      <div class="field">
-        <%= f.label :name %><br />
-        <%= f.text_field :name %>
-      </div>
-      <div class="field">
-        <%= f.file_field :avatar %>
-      </div>
+
+
       <%= f.fields_for :users do |user_form| %>
+          <div class="field"><%= user_form.label :name %><br />
+            <%= user_form.text_field :name %></div>
           <div class="field"><%= user_form.label :email %><br />
             <%= user_form.email_field :email %></div>
           <div class="field"><%= user_form.label :password %><br />
@@ -16,7 +13,9 @@
           <div class="field"><%= user_form.label :password_confirmation %><br />
             <%= user_form.password_field :password_confirmation %></div>
       <% end %>
-
+      <div class="field">
+        <%= f.file_field :avatar %>
+      </div>
       <div class="actions">
         <%= f.submit "Create account"%>
       </div>

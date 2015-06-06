@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
   def create
     @user = User.find(current_user.id)
     @profile = Profile.find_by_user_id(@user)
-    @profile.user_id = current_user.id
+   # @profile.user_id = current_user.id
     if @profile = @user.create_profile(profile_params)
       flash[:success] = "Account created"
       redirect_to user_profile_path(@user, @profile)
@@ -32,15 +32,15 @@ class ProfilesController < ApplicationController
   def update
     @user = User.find(current_user.id)
     @profile = Profile.find(@user.profile)
-    @profile.user_id = @user.id
-   @profile.update_attributes(profile_params)
-   if @profile.errors.empty?
+    #@profile.id = @user.id
+    @profile.update_attributes(profile_params)
+    if @profile.errors.empty?
      redirect_to user_profile_path(@user, @profile)
-   end
+    end
   end
 
   private
   def profile_params
-    params.require(:profile).permit(:name, :avatar)
+    params.require(:profile).permit(:avatar)
   end
 end
