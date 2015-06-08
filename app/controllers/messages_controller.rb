@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   def index
-    @message = current_user.sendmessages
+    @messages = current_user.sendmessages + current_user.recivmessages
+    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
   end
 
   def new
@@ -21,7 +22,8 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @allmessages = current_user.sendmessages + current_user.recivmessages
+    @messages = current_user.sendmessages + current_user.recivmessages
+    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
   end
 
   def outbox

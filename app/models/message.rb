@@ -7,4 +7,8 @@ class Message < ActiveRecord::Base
   validates :body, presence: true, length: { maximum: 500 }
   validates :sender_id, presence: true
   validates :reciver_id, presence: true
+
+  def self.search(search)
+    where("body LIKE ?", "%#{search}%")
+  end
 end

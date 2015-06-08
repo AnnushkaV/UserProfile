@@ -1,12 +1,20 @@
-
 <p>Find me in app/views/message/show.html.erb</p>
 <p>Find me in app/views/message/show.html.erb</p>
 
 <h3>ALL messages</h3>
 
+<%= form_tag messages_path, :method => 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", :name => nil%>
+    </p>
+<% end %>
+
+
+<%= will_paginate @messages %>
 
 <ul class="messages">
-  <% @allmessages.each do |message| %>
+  <% @messages.each do |message| %>
       <li>
 
         <span class="sender">From: <%= message.sender.name %>=></span>&nbsp &nbsp &nbsp
@@ -16,3 +24,6 @@
       </li>
   <% end %>
 </ul>
+<%= will_paginate @messages %>
+
+
