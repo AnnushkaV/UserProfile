@@ -1,8 +1,6 @@
 class ProfilesController < ApplicationController
   def show
-    @user = current_user
-    @profile = @user.profile
-    @profile = Profile.find(params[:id])  # ничего не менять!
+    @profile = Profile.find(params[:id])
   end
 
   def new
@@ -13,34 +11,34 @@ class ProfilesController < ApplicationController
 
   def create
     @user = User.find(current_user.id)
-    @profile = Profile.find_by_user_id(@user)
-   # @profile.user_id = current_user.id
-    if @profile = @user.create_profile(profile_params)
-      flash[:success] = "Account created"
+    @profile = Profile.find(@user.profile)
+    #@profile.id = @user.id
+    @profile.update_attributes(profile_params)
+    if @profile.errors.empty?
       redirect_to user_profile_path(@user, @profile)
-    else
-      render 'new'
     end
   end
 
   def edit
    @user = current_user
-   @profile = @user.profile
    @profile = Profile.find(params[:id])
   end
 
   def update
-    @user = User.find(current_user.id)
-    @profile = Profile.find(@user.profile)
-    #@profile.id = @user.id
+    puts "________________________"
+    puts profile_params
+    @profile = current_user.profile
     @profile.update_attributes(profile_params)
+    @profile.save
     if @profile.errors.empty?
-     redirect_to user_profile_path(@user, @profile)
+      redirect_to profile_path
+    else
+      render 'edit'
     end
   end
 
   private
   def profile_params
-    params.require(:profile).permit(:avatar)
+    params.require(:profile).permit(:avatar, user_attributes: [ :id, :name, :email, :password, :password_confirmation ])
   end
 end

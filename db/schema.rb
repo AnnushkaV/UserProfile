@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20150606093501) do
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",             null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

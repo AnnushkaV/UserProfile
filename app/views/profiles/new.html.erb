@@ -1,13 +1,13 @@
 <h2>Create Profile</h2>
 <div class="new_profile_form">
-  <%= form_for [@user, @profile], :url => user_profiles_path(@user) do |f| %>
+  <%= form_for [@user, @profile], :url => new_profile_path do |f| %>
 
 
       <%= f.fields_for :users do |user_form| %>
-          <div class="field"><%= user_form.label :name %><br />
-            <%= user_form.text_field :name %></div>
-          <div class="field"><%= user_form.label :email %><br />
-            <%= user_form.email_field :email %></div>
+          <div class="field"><%= user_form.label "name" %><br />
+            <%= user_form.text_field @user.name %></div>
+          <div class="field"><%= user_form.label "email" %><br />
+            <%= user_form.email_field @user.email %></div>
           <div class="field"><%= user_form.label :password %><br />
             <%= user_form.password_field :password %></div>
           <div class="field"><%= user_form.label :password_confirmation %><br />

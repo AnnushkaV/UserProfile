@@ -9,15 +9,11 @@ class MessagesController < ApplicationController
   end
 
   def create
-
-    @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id))
-    if  @message.save
-      flash[:notice] = "Message sent!"
-      redirect_to "show"
-    else
-      flash[:error] = @message.errors.full_messages.to_sentence
-      render "new"
+    @arr = User.where(params[:reciver_ids])
+    @arr.each do |user|
+      @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id, reciver_id: user.id))
     end
+    redirect_to messages_path
   end
 
   def destroy
@@ -39,6 +35,6 @@ class MessagesController < ApplicationController
   private
 
   def permitted_params
-    params.permit( message: [ :body, :reciver_id ])
+    params.permit( message: [ :body, reciver_ids:[] ])
   end
 end
