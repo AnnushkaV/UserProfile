@@ -3,11 +3,15 @@
     <p>
       <%= text_field_tag :search, params[:search]%>
 
-      <% if params[:reciver_id] %>
-         <%= hidden_field_tag "reciver_id", params[:reciver_id]%>
+      <% if params[:user_id] %>
+         <%= hidden_field_tag "user_id", params[:user_id]%>
       <%end%>
 
+
       <%= submit_tag "Search", :name => nil%>
+
+      <%= collection_select(:message, :user_id, User.all, :id, :name, {:class => 'form-control chosen-it', :selected => params[:message] ? params[:message][:user_id] : nil}, :onchange => "this.form.submit()",  :prompt => true) %>
+
     </p>
 <% end %>
 
