@@ -3,8 +3,10 @@
 
 <h3>IN messages</h3>
 
+<%= render 'messages/search' %>
+
 <ol class="messages">
-  <% @inmessage.each do |inmessage| %>
+  <% @messages.each do |inmessage| %>
       <li>
         <span class="sender">From: <%= inmessage.sender.name %> =></span>
         <span class="sender">To: <%= inmessage.reciver.name %></span>&nbsp &nbsp

@@ -1,29 +1,35 @@
+
 <p>Find me in app/views/message/show.html.erb</p>
 <p>Find me in app/views/message/show.html.erb</p>
 
 <h3>ALL messages</h3>
 
-<%= form_tag messages_path, :method => 'get' do %>
-    <p>
-      <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag "Search", :name => nil%>
-    </p>
-<% end %>
-
-
-<%= will_paginate @messages %>
+<%= render 'messages/search' %>
 
 <ul class="messages">
-  <% @messages.each do |message| %>
+  <% @messages.each do |message|%>
       <li>
-
-        <span class="sender">From: <%= message.sender.name %>=></span>&nbsp &nbsp &nbsp
-        <span class="reciver">To: <%= message.reciver.name %></span> &nbsp &nbsp &nbsp
+        <span class="sender">From: <%=link_to message.sender.name%></span>&nbsp &nbsp &nbsp
+        <span class="reciver">To: <%=link_to message.reciver.name, messages_path(reciver_id: message.reciver.id),:method => :get%></span> &nbsp &nbsp &nbsp
         <span class="content"><%= message.body %></span>&nbsp &nbsp
         <span class="create">Create: <%= message.created_at %></span>
       </li>
   <% end %>
 </ul>
-<%= will_paginate @messages %>
+
+______________________________
+
+<ul class="messages">
+  <% @messages1.each do |message|%>
+      <li>
+        <span class="sender">From: <%=link_to message.sender.name%></span>&nbsp &nbsp &nbsp
+        <span class="reciver">To: <%=link_to message.reciver.name, messages_path(:reciver_id => message.reciver.id),:method => :get %></span> &nbsp &nbsp &nbsp
+        <span class="content"><%= message.body %></span>&nbsp &nbsp
+        <span class="create">Create: <%= message.created_at %></span>
+      </li>
+  <% end %>
+</ul>
+
+
 
 

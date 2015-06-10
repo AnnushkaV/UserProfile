@@ -1,7 +1,8 @@
 class MessagesController < ApplicationController
   def index
     @messages = current_user.sendmessages + current_user.recivmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    #@messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    #@messages = Message.where(reciver_id: params[:reciver_id])
   end
 
   def new
@@ -23,20 +24,29 @@ class MessagesController < ApplicationController
 
   def show
     @messages = current_user.sendmessages + current_user.recivmessages
+
     @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    if params[:reciver_id]
+      @messages1 = Message.where(reciver_id: params[:reciver_id])
+    else
+      @messages1 = Message.all
+    end
   end
 
   def outbox
-    @outmessage = current_user.sendmessages
+    @messages = current_user.sendmessages
+    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
   end
 
   def inbox
-    @inmessage = current_user.recivmessages
+    @messages = current_user.recivmessages
+    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
   end
-
   private
 
   def permitted_params
     params.permit( message: [ :body, reciver_ids:[] ])
   end
+
+
 end

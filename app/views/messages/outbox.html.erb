@@ -3,8 +3,10 @@
 
 <h3>OUT messages</h3>
 
+<%= render 'messages/search' %>
+
 <ol class="messages">
-  <% @outmessage.each do |outmessage| %>
+  <% @messages.each do |outmessage| %>
       <li>
         <span class="sender">From:<%= outmessage.sender.name %> =></span>
         <span class="reciver">To: <%= outmessage.reciver.name %></span>&nbsp &nbsp &nbsp
