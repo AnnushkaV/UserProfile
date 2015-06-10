@@ -10,7 +10,7 @@
   <% @messages.each do |message|%>
       <li>
         <span class="sender">From: <%=link_to message.sender.name%></span>&nbsp &nbsp &nbsp
-        <span class="reciver">To: <%=link_to message.reciver.name, messages_path(reciver_id: message.reciver.id),:method => :get%></span> &nbsp &nbsp &nbsp
+        <span class="reciver">To: <%=link_to message.reciver.name, messages_path(reciver_id: message.reciver.id, search: params[:search]),:method => :get%></span> &nbsp &nbsp &nbsp
         <span class="content"><%= message.body %></span>&nbsp &nbsp
         <span class="create">Create: <%= message.created_at %></span>
       </li>
@@ -19,16 +19,6 @@
 
 ______________________________
 
-<ul class="messages">
-  <% @messages1.each do |message|%>
-      <li>
-        <span class="sender">From: <%=link_to message.sender.name%></span>&nbsp &nbsp &nbsp
-        <span class="reciver">To: <%=link_to message.reciver.name, messages_path(:reciver_id => message.reciver.id),:method => :get %></span> &nbsp &nbsp &nbsp
-        <span class="content"><%= message.body %></span>&nbsp &nbsp
-        <span class="create">Create: <%= message.created_at %></span>
-      </li>
-  <% end %>
-</ul>
 
 
 

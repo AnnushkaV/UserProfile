@@ -23,13 +23,16 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @messages = current_user.sendmessages + current_user.recivmessages
+    @messages = Message.where("sender_id = ? OR reciver_id = ? ", current_user.id, current_user.id)
 
-    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    @messages = @messages.search(params[:search])
+
+    #.paginate(:per_page => 5, :page => params[:page])
+
     if params[:reciver_id]
-      @messages1 = Message.where(reciver_id: params[:reciver_id])
+      @messages = @messages.where(reciver_id: params[:reciver_id])
     else
-      @messages1 = Message.all
+      @messages = @messages.all
     end
   end
 
