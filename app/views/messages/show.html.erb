@@ -11,8 +11,8 @@
       </tr>
     </thead>
     <tbody>
-      <% if current_user.messages.any? %>
-          <% current_user.messages.each do |message|%>
+      <% if @messages.any? %>
+          <% @messages.each do |message|%>
               <tr>
                 <td class="sender"> <%= message.sender.name %></td>
                 <td class="reciver"><%= message.reciver.name %></td>

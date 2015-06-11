@@ -26,8 +26,6 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    puts "________________________"
-    puts profile_params
     @profile = current_user.profile
     @profile.update_attributes(profile_params)
     @profile.save

@@ -21,14 +21,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @messages = current_user.messages.search(params[:search]).filter(current_user.id)
-    if params[:message]
-      if params[:message][:user_id]
-        @messages = @messages.filter(params[:message][:user_id])
-      end
-    else
-      @messages = @messages.all
-    end
+    @messages = current_user.messages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
     @messages = @messages.paginate(:per_page => 5, :page => params[:page])
   end
 

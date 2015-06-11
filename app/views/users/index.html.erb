@@ -2,8 +2,6 @@
   <% provide(:title, 'All users') %>
   <h1>All users</h1>
 
-
-
   <table>
     <tr>
       <th>Name</th>
@@ -18,9 +16,6 @@
           <td><%=link_to 'Sent Message', "#", class: "btn btn-primary btn-xs start-conversation",
                   "data-sid" => current_user.id, "data-rip" => user.id%></td>
         </tr>
-    <% end %> <br />
+    <% end %>
   </table>
-
-            <br />
-
 </div>
