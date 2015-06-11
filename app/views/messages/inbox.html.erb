@@ -1,0 +1,17 @@
+<p>Find me in app/views/message/show.html.erb</p>
+<p>Find me in app/views/message/show.html.erb</p>
+
+<h3>IN messages</h3>
+
+<%= render 'messages/search' %>
+
+<ol class="messages">
+  <% @messages.each do |inmessage| %>
+      <li>
+        <span class="sender">From: <%= inmessage.sender.name %> =></span>
+        <span class="sender">To: <%= inmessage.reciver.name %></span>&nbsp &nbsp
+        <span class="content">Text: <%= inmessage.body %></span>&nbsp &nbsp
+        <span class="create">Create: <%= inmessage.created_at %></span>
+      </li>
+  <% end %>
+</ol>

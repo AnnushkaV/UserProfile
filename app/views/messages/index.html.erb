@@ -1,0 +1,36 @@
+
+<p>Find me in app/views/message/show.html.erb</p>
+<p>Find me in app/views/message/show.html.erb</p>
+
+<h3>ALL messages</h3>
+
+<%= form_tag messages_path, :method => 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", :name => nil%>
+    </p>
+<% end %>
+<% if @messages.present? %>
+    <%= render @messages %>
+<% else %>
+    <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+<% end %>
+
+<%= will_paginate @messages %>
+
+<ul class="messages">
+  <% @messages.each do |message|%>
+      <li>
+        <span class="sender">From: <%=link_to message.sender.name%></span>&nbsp &nbsp &nbsp
+        <span class="reciver">To: <%=link_to message.reciver.name, message_path%></span> &nbsp &nbsp &nbsp
+        <span class="content"><%= message.body %></span>&nbsp &nbsp
+        <span class="create">Create: <%= message.created_at %></span>
+      </li>
+  <% end %>
+</ul>
+
+
+<%= render 'messages/feed'%>
+<%= will_paginate @messages %>
+
+

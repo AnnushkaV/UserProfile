@@ -1,41 +1,44 @@
 class ProfilesController < ApplicationController
   def show
-    @user = current_user
-     @profile = @user.profile
+    @profile = Profile.find(params[:id])
   end
 
   def new
+    @user = User.new
     @user = current_user
     @profile = Profile.new
   end
 
   def create
-    @user = current_user
-    @profile = Profile.new(profile_params)
-    if @profile.save
-      flash[:success] = "Account created"
-      redirect_to profile_path
-    else
-      render 'new'
+    @user = User.find(current_user.id)
+    @profile = Profile.find(@user.profile)
+    #@profile.id = @user.id
+    @profile.update_attributes(profile_params)
+    if @profile.errors.empty?
+      redirect_to user_profile_path(@user, @profile)
     end
   end
 
   def edit
-    @profile = current_user.profile
+   @user = current_user
+   @profile = Profile.find(params[:id])
   end
 
   def update
+    puts "________________________"
+    puts profile_params
     @profile = current_user.profile
-    @profile.assign_attributes(profile_params)
-    if profile.save
-      redirect_to [current_user, profile]
+    @profile.update_attributes(profile_params)
+    @profile.save
+    if @profile.errors.empty?
+      redirect_to profile_path
     else
-      render :new
+      render 'edit'
     end
   end
 
   private
   def profile_params
-    params.require(:profiles).permit(:name, :avatar)
+    params.require(:profile).permit(:avatar, user_attributes: [ :id, :name, :email, :password, :password_confirmation ])
   end
 end

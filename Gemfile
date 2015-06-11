@@ -27,6 +27,7 @@ gem 'bootstrap-will_paginate'
 gem 'will_paginate'
 gem 'devise'
 gem 'paperclip'
+gem 'faker'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
