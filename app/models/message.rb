@@ -8,7 +8,6 @@ class Message < ActiveRecord::Base
   validates :sender_id, presence: true
   validates :reciver_id, presence: true
 
-  def self.search(search)
-    where("body LIKE ?", "%#{search}%")
-  end
+  scope :search, -> (search) { where("body LIKE ?", "%#{search}%") if search.present? }
+  scope :filter, ->  (filter) { where("sender_id = ? OR reciver_id = ? ", filter, filter ) if filter.present? }
 end

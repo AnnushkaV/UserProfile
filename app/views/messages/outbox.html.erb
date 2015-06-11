@@ -5,13 +5,29 @@
 
 <%= render 'messages/search' %>
 
-<ol class="messages">
-  <% @messages.each do |outmessage| %>
-      <li>
-        <span class="sender">From:<%= outmessage.sender.name %> =></span>
-        <span class="reciver">To: <%= outmessage.reciver.name %></span>&nbsp &nbsp &nbsp
-        <span class="content">Text: <%= outmessage.body %></span>&nbsp &nbsp &nbsp
-        <span class="create">Create: <%= outmessage.created_at %></span>
-      </li>
-  <% end %>
-</ol>
+<div class="container" >
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>From:</th>
+      <th>To:</th>
+      <th>Message:</th>
+      <th>Created:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @messages.any? %>
+        <% @messages.each do |message|%>
+            <tr>
+              <td class="sender"> <%= message.sender.name %></td>
+              <td class="reciver"><%= message.reciver.name %></td>
+              <td class="content"><%= message.body %></td>
+              <td class="create"> <%= message.created_at %></td>
+            </tr>
+        <% end %>
+    <% else %>
+        <p>Your messages not found</p>
+    <% end %>
+    </tbody>
+  </table>
+</div>

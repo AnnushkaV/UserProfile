@@ -1,19 +1,13 @@
-
 <%= form_tag messages_path, :method => 'get' do %>
-    <p>
-      <%= text_field_tag :search, params[:search]%>
-
-      <% if params[:user_id] %>
-         <%= hidden_field_tag "user_id", params[:user_id]%>
-      <%end%>
-
-
-      <%= submit_tag "Search", :name => nil%>
-
-      <%= collection_select(:message, :user_id, User.all, :id, :name, {:class => 'form-control chosen-it', :selected => params[:message] ? params[:message][:user_id] : nil}, :onchange => "this.form.submit()",  :prompt => true) %>
-
-    </p>
+ <div class="col-sm-5" id="message-form">
+     <%= text_field_tag :search, params[:search], class: "form-control" , style: "width: 200px; float: left; margin-right: 5px" %>
+     <% if params[:user_id] %>
+       <%= hidden_field_tag "user_id", params[:user_id]%>
+     <%end%>
+   <%= submit_tag "Search", :name => nil, class: "btn btn-primary btn-sm" , type: "button", style: "height: 33px"%>
+   <div class="clearfix"></div>
+ </div>
+ <%= collection_select :message, :user_id, User.all, :id, :name,  {:selected => params[:message] ? params[:message][:user_id] : nil}, {class: "form-control chosen-it", :style => 'width: 200px', :onchange => "this.form.submit()"} %>
 <% end %>
-
-
+<%= will_paginate @messages %>
 
