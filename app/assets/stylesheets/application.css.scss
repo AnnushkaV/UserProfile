@@ -19,4 +19,14 @@
 @import 'bootstrap';
 @import 'bootstrap/theme';
 
-
+#message-form.input-group {
+  float: left !important;
+  margin-right: 20px;
+}
+form{
+  overflow: hidden;
+  margin-left: -29px;
+}
+.form-control{
+  width: 92%;
+}

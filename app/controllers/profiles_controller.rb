@@ -4,7 +4,6 @@ class ProfilesController < ApplicationController
   end
 
   def new
-    @user = User.new
     @user = current_user
     @profile = Profile.new
   end
@@ -15,7 +14,9 @@ class ProfilesController < ApplicationController
     #@profile.id = @user.id
     @profile.update_attributes(profile_params)
     if @profile.errors.empty?
-      redirect_to user_profile_path(@user, @profile)
+      redirect_to profile_path
+    else
+      render 'new'
     end
   end
 
@@ -25,8 +26,6 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    puts "________________________"
-    puts profile_params
     @profile = current_user.profile
     @profile.update_attributes(profile_params)
     @profile.save

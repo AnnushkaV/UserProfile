@@ -1,8 +1,6 @@
 class MessagesController < ApplicationController
   def index
     @messages = current_user.sendmessages + current_user.recivmessages
-    #@messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
-    #@messages = Message.where(reciver_id: params[:reciver_id])
   end
 
   def new
@@ -23,27 +21,13 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @messages = Message.where("sender_id = ? OR reciver_id = ? ", current_user.id, current_user.id)
-
-    puts params
-    @messages = @messages.search(params[:search])
-
-    #.paginate(:per_page => 5, :page => params[:page])
-
-    if params[:message]
-      if params[:message][:user_id]
-       @messages = @messages.where("sender_id = ? OR reciver_id = ? ", params[:message][:user_id], params[:message][:user_id] )
-      end
-    else
-      @messages = @messages.all
-    end
-
-
+    @messages = current_user.messages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
+    @messages = @messages.paginate(:per_page => 5, :page => params[:page])
   end
 
   def outbox
     @messages = current_user.sendmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    @messages = Message.search(params[:search]).paginate(:per_page => 4, :page => params[:page])
   end
 
   def inbox
@@ -55,6 +39,4 @@ class MessagesController < ApplicationController
   def permitted_params
     params.permit( message: [ :body, reciver_ids:[] ])
   end
-
-
 end

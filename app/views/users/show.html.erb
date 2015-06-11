@@ -1,5 +1,24 @@
 <p>MY info</p>
 
-<p> Users name <%= @user.name %> </p>
-<p> Users email <%= @user.email %> </p>
-
+<div class="container" >
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>From:</th>
+      <th>To:</th>
+      <th>Message:</th>
+      <th>Created:</th>
+    </tr>
+    </thead>
+    <tbody>
+      <%- current_user.messages.each do |message|%>
+        <tr>
+          <td class="sender"> <%= message.sender.name %></td>
+          <td class="reciver"><%= message.reciver.name %></td>
+          <td class="content"><%= message.body %></td>
+          <td class="create"> <%= message.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
