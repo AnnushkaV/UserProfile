@@ -2,6 +2,8 @@
 
 <%= render 'messages/search' %>
 
+<%= will_paginate @inmessages %>
+
 <div class="container" >
   <table class="table table-hover">
     <thead>
@@ -13,8 +15,8 @@
     </tr>
     </thead>
     <tbody>
-    <% if @messages.any? %>
-        <% @messages.each do |message|%>
+    <% if @inmessages.any? %>
+        <% @inmessages.each do |message|%>
             <tr>
               <td class="sender"> <%= message.sender.name %></td>
               <td class="reciver"><%= message.reciver.name %></td>

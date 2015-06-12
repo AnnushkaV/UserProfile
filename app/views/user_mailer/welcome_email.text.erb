@@ -1,9 +1,4 @@
-Welcome to example.com, <%= @message.reciver.name %>
-===============================================
-
-You have successfully signed up to example.com,
-your username is: <%= @message.reciver.name %>.
-
-To login to the site, just follow this link: <%= @url %>.
-
+Hi, <%= @message.reciver.name %>
+You recived message from: <%= @message.sender.name %>.
+Text message: <%= @message.body %>
 Thanks for joining and have a great day!

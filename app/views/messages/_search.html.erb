@@ -10,6 +10,4 @@
  </div>
  <%= collection_select :message, :user_id, User.all, :id, :name,  {:selected => params[:message] ? params[:message][:user_id] : nil}, {class: "form-control chosen-it", :style => 'width: 200px', :onchange => "this.form.submit()"} %>
 
-<%= will_paginate @messages %>
-
 <% end %>

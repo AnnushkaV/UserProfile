@@ -9,9 +9,12 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @arr = User.where(params[:reciver_ids])
+    puts params
+    puts "***********"
+    @arr = User.where(id: params[:message][:reciver_id])
     @arr.each do |user|
       @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id, reciver_id: user.id))
+      UserMailer.welcome_email(@message).deliver_now
     end
     redirect_to messages_path
   end
@@ -26,13 +29,15 @@ class MessagesController < ApplicationController
   end
 
   def outbox
-    @messages = current_user.sendmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 4, :page => params[:page])
+    @outmessages = current_user.sendmessages
+    @outmessages = @outmessages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
+    @outmessages = @outmessages.paginate(:per_page => 4, :page => params[:page])
   end
 
   def inbox
-    @messages = current_user.recivmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 4, :page => params[:page])
+    @inmessages = current_user.recivmessages
+    @inmessages = @inmessages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
+    @inmessages = @inmessages.paginate(:per_page => 4, :page => params[:page])
   end
 
   def readed
@@ -53,31 +58,9 @@ class MessagesController < ApplicationController
     @messages = Message.archived
   end
 
-  def send_mail
-    mail = Pony.mail(
-        :to => params[:message][:reciver][:email],
-        :from => params[:message][:sender][:name],
-        :headers => { 'Content-Type' => 'text/html' },
-        :body =>  params[:message][:body],
-        :via => :smtp,
-        :via_options => {
-            :address              => "smtp.gmail.com",
-            :port                 => 587,
-            :enable_starttls_auto => true,
-            :user_name            => ENV["GMAIL_USERNAME"],
-            :password             => ENV["GMAIL_PASSWORD"],
-            :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
-            :domain               => ENV["DOMAIN"], # the HELO domain provided by the client to the server
-        } )
-    respond_to do |format|
-      format.html { redirect_to root_url, notice: 'Email was successfully sended.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
   def permitted_params
-    params.permit( message: [:readed, :archived, :body, reciver_ids:[]])
+    params.permit( message: [:readed, :archived, :body])
   end
 end
