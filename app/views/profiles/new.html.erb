@@ -1,6 +1,6 @@
 <h2>Create Profile</h2>
 <div class="new_profile_form">
-  <%= form_for [@user, @profile], :url => new_profile_path do |f| %>
+  <%= form_for [@user, @profile], method: :post, :url => new_profile_path do |f| %>
 
 
       <%= f.fields_for :users do |user_form| %>

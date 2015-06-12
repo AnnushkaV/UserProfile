@@ -11,7 +11,6 @@ class ProfilesController < ApplicationController
   def create
     @user = User.find(current_user.id)
     @profile = Profile.find(@user.profile)
-    #@profile.id = @user.id
     @profile.update_attributes(profile_params)
     if @profile.errors.empty?
       redirect_to profile_path
