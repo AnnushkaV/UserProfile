@@ -53,6 +53,27 @@ class MessagesController < ApplicationController
     @messages = Message.archived
   end
 
+  def send_mail
+    mail = Pony.mail(
+        :to => params[:message][:reciver][:email],
+        :from => params[:message][:sender][:name],
+        :headers => { 'Content-Type' => 'text/html' },
+        :body =>  params[:message][:body],
+        :via => :smtp,
+        :via_options => {
+            :address              => "smtp.gmail.com",
+            :port                 => 587,
+            :enable_starttls_auto => true,
+            :user_name            => ENV["GMAIL_USERNAME"],
+            :password             => ENV["GMAIL_PASSWORD"],
+            :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+            :domain               => ENV["DOMAIN"], # the HELO domain provided by the client to the server
+        } )
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'Email was successfully sended.' }
+      format.json { head :no_content }
+    end
+  end
 
   private
 
