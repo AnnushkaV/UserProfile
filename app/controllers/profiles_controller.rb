@@ -21,13 +21,11 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    puts "----------------"
     @user = current_user
     @profile = Profile.find_by user_id: current_user.id
   end
 
   def update
-    puts "0000000000000"
     @profile = current_user.profile
     @profile.update_attributes(profile_params)
     @profile.save

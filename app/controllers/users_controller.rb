@@ -27,13 +27,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    puts "**********"
     @user = User.find(params[:id])
   end
 
   # process edit-user-form post
   def update
-    puts "////////////"
     @profile = current_user.profile
     @profile.update_attributes(user_params)
     @profile.save
