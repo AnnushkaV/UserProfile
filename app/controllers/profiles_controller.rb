@@ -1,30 +1,33 @@
 class ProfilesController < ApplicationController
   def show
-    @profile = Profile.find(params[:id])
+    @user = User.find(current_user.id)
+    @profile = Profile.find_by_user_id(@user)
   end
 
   def new
-    @user = current_user
-    @profile = Profile.new
+    @user.profile = Profile.new
+    @profile = @user.profile
   end
 
   def create
-    @user = User.find(current_user.id)
-    @profile = Profile.find(@user.profile)
-    @profile.update_attributes(profile_params)
-    if @profile.errors.empty?
-      redirect_to profile_path
+    super
+    @profile = @user.profiles.build(profile_params)
+    if @profile.save
+      flash[:notice] = "Profile written"
+      redirect_to :action => 'show'
     else
-      render 'new'
+      render :action => 'new'
     end
   end
 
   def edit
-   @user = current_user
-   @profile = Profile.find(params[:id])
+    puts "----------------"
+    @user = current_user
+    @profile = Profile.find_by user_id: current_user.id
   end
 
   def update
+    puts "0000000000000"
     @profile = current_user.profile
     @profile.update_attributes(profile_params)
     @profile.save

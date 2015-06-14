@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     post :readed, action: "readed", type: "recivmessages", on: :collection #->
     post :archived, action: "archived", type: "recivmessages", on: :collection #->
   end
+
   resources :profiles
+
 end

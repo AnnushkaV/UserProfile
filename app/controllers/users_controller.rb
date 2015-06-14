@@ -15,15 +15,34 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
+    @user = User.new(user_params)
     if @user.save
-      flash[:success] = "User added and activated."
-      redirect_to users_path
+      @profile = Profile.create
+      @profile.user_id = @user.id
+      @profile.save
+      redirect_to root_url, :notice => "You have succesfully signed up!"
     else
-      render 'new'
+      render "new"
     end
   end
 
+  def edit
+    puts "**********"
+    @user = User.find(params[:id])
+  end
+
+  # process edit-user-form post
+  def update
+    puts "////////////"
+    @profile = current_user.profile
+    @profile.update_attributes(user_params)
+    @profile.save
+    if @profile.errors.empty?
+      redirect_to user_path
+    else
+      render 'edit'
+    end
+  end
   def sender
     @user = User.find(params[:id])
   end

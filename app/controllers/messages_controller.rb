@@ -9,8 +9,6 @@ class MessagesController < ApplicationController
   end
 
   def create
-    puts params
-    puts "***********"
     @arr = User.where(id: params[:message][:reciver_id])
     @arr.each do |user|
       @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id, reciver_id: user.id))
