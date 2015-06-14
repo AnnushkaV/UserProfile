@@ -9,9 +9,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @arr = User.where(params[:reciver_ids])
+    @arr = User.where(id: params[:message][:reciver_id])
     @arr.each do |user|
       @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id, reciver_id: user.id))
+      UserMailer.welcome_email(@message).deliver_now
     end
     redirect_to messages_path
   end
@@ -26,17 +27,38 @@ class MessagesController < ApplicationController
   end
 
   def outbox
-    @messages = current_user.sendmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 4, :page => params[:page])
+    @outmessages = current_user.sendmessages
+    @outmessages = @outmessages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
+    @outmessages = @outmessages.paginate(:per_page => 4, :page => params[:page])
   end
 
   def inbox
-    @messages = current_user.recivmessages
-    @messages = Message.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    @inmessages = current_user.recivmessages
+    @inmessages = @inmessages.search(params[:search]).filter( params[:message] ? params[:message][:user_id] : nil)
+    @inmessages = @inmessages.paginate(:per_page => 4, :page => params[:page])
   end
+
+  def readed
+    @message = Message.find_by(id: params[:id])
+    @message.update_attributes(:readed => params[:readed])
+    flash[:success] = 'The message was marked as read.'
+    redirect_to messages_path
+  end
+
+  def archived
+    @message = Message.find_by(id: params[:id])
+    @message.update_attributes(:archived => params[:archived])
+    flash[:success] = 'The message was marked as read.'
+    redirect_to messages_path
+  end
+
+  def archiv
+    @messages = Message.archived
+  end
+
   private
 
   def permitted_params
-    params.permit( message: [ :body, reciver_ids:[] ])
+    params.permit( message: [:readed, :archived, :body])
   end
 end

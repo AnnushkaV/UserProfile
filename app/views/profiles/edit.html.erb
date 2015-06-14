@@ -1,6 +1,6 @@
 <h2>Edit Profile</h2>
 <div class="edit_profile_form">
-  <%= form_for [@user, @profile], :url => profile_path(@profile)  do |f| %>
+  <%= form_for  @profile, :url => profile_path(@profile)  do |f| %>
 
           <%= f.fields_for :user do |user_form| %>
               <div class="field"><%= user_form.label :email %><br />

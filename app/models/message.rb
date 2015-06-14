@@ -10,4 +10,5 @@ class Message < ActiveRecord::Base
 
   scope :search, -> (search) { where("body LIKE ?", "%#{search}%") if search.present? }
   scope :filter, ->  (filter) { where("sender_id = ? OR reciver_id = ? ", filter, filter ) if filter.present? }
+  scope :archived, ->  { where(archived: true) }
 end

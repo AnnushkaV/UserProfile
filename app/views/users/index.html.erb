@@ -13,7 +13,7 @@
     <% @users.each do |user| %>
         <tr>
           <td><%= user.name%></td>
-          <td><%=link_to 'Sent Message', "#", class: "btn btn-primary btn-xs start-conversation",
+          <td><%=link_to 'Send Message', new_message_path(reciver_id: user.id), class: "btn btn-primary btn-xs start-conversation",
                   "data-sid" => current_user.id, "data-rip" => user.id%></td>
         </tr>
     <% end %>

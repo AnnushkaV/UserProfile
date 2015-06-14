@@ -1,0 +1,51 @@
+<h3>ARCHIVED messages</h3>
+
+<div class="container" >
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>From:</th>
+      <th>To:</th>
+      <th>Message:</th>
+      <th>Created:</th>
+      <th>Readed:</th>
+      <th>Archived:</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% if @messages.any? %>
+            <% @messages.each do |message|%>
+                <tr>
+                  <td class="sender"> <%= message.sender.name %></td>
+                  <td class="reciver"><%= message.reciver.name %></td>
+                  <td class="content"><%= message.body %></td>
+                  <td class="create"> <%= message.created_at %></td>
+                  <td class="readed">
+                    <% if message.readed == true %>
+                      <%= link_to 'Помеченно прочитанным', readed_messages_path(id: message.id, :readed => false),
+                            class: 'btn btn-xs btn-info', method: :post  %>
+                    <% else %>
+                      <%= link_to 'Пометить прочитанным', readed_messages_path(id: message.id, :readed => true),
+                                class: 'btn btn-xs btn-info', method: :post  %>
+                    <% end %>
+                  </td>
+                  <td class="archived">
+                    <% if message.archived == true %>
+                      <%= link_to 'Добавленно в архив', archived_messages_path(:id => message.id, :archived => false), class: 'btn btn-xs btn-danger', method: :post%>
+                    <% else %>
+                      <%= link_to 'В архив', archived_messages_path(:id => message.id, :archived => true), class: 'btn btn-xs btn-danger', method: :post%>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+        <% else %>
+            <p>Your messages not found</p>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+

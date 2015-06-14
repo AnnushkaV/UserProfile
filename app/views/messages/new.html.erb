@@ -1,5 +1,5 @@
-<h1>Messaae#new</h1>
-<%= form_tag messages_path, method: :post do %>
+<h1>Message#new</h1>
+<%= form_tag messages_path,  method: :post do %>
     <div class="form-group">
       <%= label_tag 'message[body]', 'Message' %>
       <%= text_area_tag 'message[body]', nil, cols: 3, class: 'form-control', required: true %>

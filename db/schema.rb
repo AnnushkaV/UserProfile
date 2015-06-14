@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606093501) do
+ActiveRecord::Schema.define(version: 20150611095611) do
 
   create_table "messages", force: :cascade do |t|
     t.text     "body"
@@ -19,8 +19,12 @@ ActiveRecord::Schema.define(version: 20150606093501) do
     t.integer  "reciver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "readed",     default: false
+    t.boolean  "archived",   default: false
   end
 
+  add_index "messages", ["archived"], name: "index_messages_on_archived"
+  add_index "messages", ["readed"], name: "index_messages_on_readed"
   add_index "messages", ["reciver_id"], name: "index_messages_on_reciver_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
