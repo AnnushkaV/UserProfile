@@ -5,14 +5,14 @@ class MessagesController < ApplicationController
 
   def new
     @message = current_user.sendmessages.new
-    @chosen_reciver = User.find_by(id: params[:reciver_id].to_i) if params[:reciver_id]
+    @chosen_reciver = User.find(id: params[:reciver_id].to_i) if params[:reciver_id]
   end
 
   def create
     @arr = User.where(id: params[:message][:reciver_id])
     @arr.each do |user|
       @message = current_user.sendmessages.create(permitted_params[:message].merge!(sender_id: current_user.id, reciver_id: user.id))
-      UserMailer.welcome_email(@message).deliver_now
+      #UserMailer.welcome_email(@message).deliver_now
     end
     redirect_to messages_path
   end
