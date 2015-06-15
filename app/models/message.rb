@@ -11,4 +11,12 @@ class Message < ActiveRecord::Base
   scope :search, -> (search) { where("body LIKE ?", "%#{search}%") if search.present? }
   scope :filter, ->  (filter) { where("sender_id = ? OR reciver_id = ? ", filter, filter ) if filter.present? }
   scope :archived, ->  { where(archived: true) }
+
+  after_create :send_email
+
+  private
+
+    def send_email
+      UserMailer.welcome_email(self).deliver_now
+    end
 end
